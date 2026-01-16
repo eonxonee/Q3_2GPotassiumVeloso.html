@@ -7,6 +7,9 @@
     <style>
         body {
             font-family: Georgia, 'Times New Roman', Times, serif;
+            background-color: #ffced8;
+            color: #000000;
+            margin: 20px;
         }
         input[type="text"] {
             width: 300px;
@@ -18,56 +21,57 @@
     </style>
 </head>
 
-    <body>
-        <form action="/action_page.php">
-        <label for="studentid">Student ID:</label><br>
-        <input type="number" id="studentid" name="studentid"><br>
+<body>
+        <form action="/submit-page" method = "post">
+        <label for="studentid">Student ID:</label><br><br>
+        <input type="number" id="studentid" name="studentid"><br><br>
 
-        <label for="fname">Full name:</label><br>
-        <input type="text" id="fname" name="fname"><br>
+        <label for="fname">Full name:</label><br><br>
+        <input type="text" id="fname" name="fname"><br><br>
 
-        <label for="bday">Birthday:</label><br>
-        <input type="date" id="bday" name="bday">
+        <label for="bday">Birthday:</label><br><br>
+        <input type="date" id="bday" name="bday"><br><br>
 
-        <label for="email">Email Address:</label><br>
-        <input type="email" id="email" name="email">
+        <label for="email">Email Address:</label><br><br>
+        <input type="email" id="email" name="email"><br><br>
 
-        <label for="phone">Mobile Phone:</label><br>
-        <input type="text" id="phone" name="phone">
+        <label for="phone">Mobile Phone:</label><br><br>
+        <input type="text" id="phone" name="phone"><br><br>
 
-        <label for="grlevel">Grade Level:</label><br>
+        <label for="grlevel">Grade Level:</label><br><br>
         <select name="grlevel" id="grlevel">
         <option value="gseven">G7</option>
         <option value="geight">G8</option>
         <option value="gnine">G9</option>
         <option value="gten">G10</option>
-        </select><br>
+        <option value="geleven">G11</option>
+        <option value="gtwelve">G12</option>
+        </select><br><br>
 
         <p>Intern or Extern:</p>
 
             <form>
             <input type="radio" id="intern" name="intern_extern" value="Intern">
-            <label for="intern">Intern</label><br>
+            <label for="intern">Intern</label><br><br>
             <input type="radio" id="extern" name="intern_extern" value="Extern">
-            <label for="extern">Extern</label><br>
+            <label for="extern">Extern</label><br><br>
             </form>
         
-        <label for="organization">Preferred Club:</label><br>
+        <label for="organization">Preferred Club:</label><br><br>
         <select name="organization" id="organization">
         <option value="art">Arts Club</option>
         <option value="sports">Sports Club</option>
         <option value="theatre">Theatre Club</option>
         <option value="science">Science Club</option>
         <option value="math">Math Club</option>
+        </select><br><br>
 
         <label for="reason">Reason for Joining:</label><br>
-        <input type="text" id="reason" name="reason">
+        <input type="text" id="reason" name="reason"><br><br>
 
-        <input type="submit" value="Submit">
-        <input type="reset" value="Reset">
+        <input type="submit" value="Submit Form"><br><br>
+        <input type="reset" value="Reset Form">
         </form>
-        }   
-    </body>
-    }
+
+</body>
 </html>
-}
