@@ -11,67 +11,86 @@
             color: #000000;
             margin: 20px;
         }
-        input[type="text"] {
+        input[type="text"], input[type="number"], input[type="email"], input[type="date"], select {
             width: 300px;
-            padding: 8px;
+            padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #000000;
             border-radius: 4px;
+        }
+        input:focus, select:focus {
+            border-color: #ff4492;
+            box-shadow: 0 0 5px rgba(255, 0, 166, 0.5);
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(190, 130, 161, 0.1);
         }
     </style>
 </head>
 
 <body>
-        <form action="/submit-page" method = "post">
+    <form action="submit" method="post" onsubmit="return confirm('Confirm Form Submission?');">
         <label for="studentid">Student ID:</label><br><br>
-        <input type="number" id="studentid" name="studentid"><br><br>
+        <input type="number" id="studentid" name="studentid" required><br><br>
 
         <label for="fname">Full name:</label><br><br>
-        <input type="text" id="fname" name="fname"><br><br>
+        <input type="text" id="fname" name="fname" required><br><br>
 
         <label for="bday">Birthday:</label><br><br>
-        <input type="date" id="bday" name="bday"><br><br>
+        <input type="date" id="bday" name="bday" required><br><br>
 
         <label for="email">Email Address:</label><br><br>
-        <input type="email" id="email" name="email"><br><br>
+        <input type="email" id="email" name="email" required><br><br>
 
         <label for="phone">Mobile Phone:</label><br><br>
-        <input type="text" id="phone" name="phone"><br><br>
+        <input type="text" id="phone" name="phone" required><br><br>
 
         <label for="grlevel">Grade Level:</label><br><br>
-        <select name="grlevel" id="grlevel">
-        <option value="gseven">G7</option>
-        <option value="geight">G8</option>
-        <option value="gnine">G9</option>
-        <option value="gten">G10</option>
-        <option value="geleven">G11</option>
-        <option value="gtwelve">G12</option>
+        <select name="grlevel" id="grlevel" required>
+            <option value="gseven">G7</option>
+            <option value="geight">G8</option>
+            <option value="gnine">G9</option>
+            <option value="gten">G10</option>
+            <option value="geleven">G11</option>
+            <option value="gtwelve">G12</option>
         </select><br><br>
 
         <p>Intern or Extern:</p>
+        <input type="radio" id="intern" name="intern_extern" value="Intern" required>
+        <label for="intern">Intern</label><br><br>
+        <input type="radio" id="extern" name="intern_extern" value="Extern" required>
+        <label for="extern">Extern</label><br><br>
 
-            <form>
-            <input type="radio" id="intern" name="intern_extern" value="Intern">
-            <label for="intern">Intern</label><br><br>
-            <input type="radio" id="extern" name="intern_extern" value="Extern">
-            <label for="extern">Extern</label><br><br>
-            </form>
-        
         <label for="organization">Preferred Club:</label><br><br>
-        <select name="organization" id="organization">
-        <option value="art">Arts Club</option>
-        <option value="sports">Sports Club</option>
-        <option value="theatre">Theatre Club</option>
-        <option value="science">Science Club</option>
-        <option value="math">Math Club</option>
+        <select name="organization" id="organization" required>
+            <option value="art">Arts Club</option>
+            <option value="sports">Sports Club</option>
+            <option value="theatre">Theatre Club</option>
+            <option value="science">Science Club</option>
+            <option value="math">Math Club</option>
         </select><br><br>
 
         <label for="reason">Reason for Joining:</label><br>
-        <input type="text" id="reason" name="reason"><br><br>
+        <input type = "text" id="reason" name="reason"></><br><br>
 
-        <input type="submit" value="Submit Form"><br><br>
         <input type="reset" value="Reset Form">
-        </form>
+        <input type="submit" value="Submit Form">
+    </form>
 
+    <script>
+        function resetPage() {
+            document.getElementById("studentid").value = "";
+            document.getElementById("fname").value = "";
+            document.getElementById("bday").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("phone").value = "";
+            document.getElementById("grlevel").value = "";
+            document.getElementById("organization").value = "";
+            document.getElementById("reason").value = "";
+        }
+    </script>
 </body>
 </html>
