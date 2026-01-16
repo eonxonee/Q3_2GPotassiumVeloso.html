@@ -3,11 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Title</title>
+    <title>CLUB APPLICATION FORM</title>
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #000000;
+            border-radius: 4px;
+        }
 </head>
 <body>
-    <!-- All visible content goes here -->
-    <h1>Hello, World!</h1>
-    <p>This is my first paragraph.</p>
+    <form>
+    <label for="studentid">Student ID:</label><br>
+    <input type="number" id="studentid" name="studentid"><br>
+
+    <label for="fname">Full name:</label><br>
+    <input type="text" id="fname" name="fname"><br>
+
+    <label for="bday">Birthday:</label><br>
+    <input type="date" id="bday" name="bday">
+
+    <label for="email">Email Address:</label><br>
+    <input type="email" id="email" name="email">
+
+    <label for="phone">Mobile Phone:</label><br>
+    <input type="text" id="phone" name="phone">
+
+    <label for="grlevel">Grade Level:</label><br>
+    <select name="grlevel" id="grlevel">
+    <option value="gseven">G7</option>
+    <option value="geight">G8</option>
+    <option value="gnine">G9</option>
+    <option value="gten">G10</option>
+    </select><br>
+
+    
+
+    </form>
+
+
+Intern / Extern (radio button with appropriate values different from what is displayed on the screen)
+Preferred Organization / Club (drop down menu - provide your own list with at least 5 items with appropriate values different from what is displayed on the screen)
+Why do you want to join (textarea).
+A submit and reset buttons
+
+
 </body>
 </html>
