@@ -17,7 +17,7 @@
         }
 </head>
 <body>
-    <form>
+    <form action="/action_page.php">
     <label for="studentid">Student ID:</label><br>
     <input type="number" id="studentid" name="studentid"><br>
 
@@ -41,14 +41,30 @@
     <option value="gten">G10</option>
     </select><br>
 
-    
+    <p>Intern or Extern:</p>
 
+        <form>
+        <input type="radio" id="intern" name="intern_extern" value="Intern">
+        <label for="intern">Intern</label><br>
+        <input type="radio" id="extern" name="intern_extern" value="Extern">
+        <label for="extern">Extern</label><br>
+        </form>
+    
+    <label for="organization">Preferred Club:</label><br>
+    <select name="organization" id="organization">
+    <option value="art">Arts Club</option>
+    <option value="sports">Sports Club</option>
+    <option value="theatre">Theatre Club</option>
+    <option value="science">Science Club</option>
+    <option value="math">Math Club</option>
+
+    <label for="reason">Reason for Joining:</label><br>
+    <input type="text" id="reason" name="reason">
+
+    <input type="submit" value="Submit">
+    <input type="reset" value="Reset">
     </form>
 
-
-Intern / Extern (radio button with appropriate values different from what is displayed on the screen)
-Preferred Organization / Club (drop down menu - provide your own list with at least 5 items with appropriate values different from what is displayed on the screen)
-Why do you want to join (textarea).
 A submit and reset buttons
 
 
