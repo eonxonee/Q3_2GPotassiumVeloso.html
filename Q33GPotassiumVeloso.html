@@ -50,27 +50,27 @@
 
         <label for="grlevel">Grade Level:</label><br><br>
         <select name="grlevel" id="grlevel" required>
-            <option value="gseven">G7</option>
-            <option value="geight">G8</option>
-            <option value="gnine">G9</option>
-            <option value="gten">G10</option>
-            <option value="geleven">G11</option>
-            <option value="gtwelve">G12</option>
+            <option value="G7">G7</option>
+            <option value="G8">G8</option>
+            <option value="G9">G9</option>
+            <option value="G10">G10</option>
+            <option value="G11">G11</option>
+            <option value="G12">G12</option>
         </select><br><br>
 
         <p>Intern or Extern:</p>
         <input type="radio" id="intern" name="intern_extern" value="Intern" required>
-        <label for="intern">Intern</label><br><br>
+        <label for="Intern">Intern</label><br><br>
         <input type="radio" id="extern" name="intern_extern" value="Extern" required>
-        <label for="extern">Extern</label><br><br>
+        <label for="Extern">Extern</label><br><br>
 
         <label for="organization">Preferred Club:</label><br><br>
         <select name="organization" id="organization" required>
-            <option value="art">Arts Club</option>
-            <option value="sports">Sports Club</option>
-            <option value="theatre">Theatre Club</option>
-            <option value="science">Science Club</option>
-            <option value="math">Math Club</option>
+            <option value="Arts">Arts Club</option>
+            <option value="Sports">Sports Club</option>
+            <option value="Theatre">Theatre Club</option>
+            <option value="Science">Science Club</option>
+            <option value="Math">Math Club</option>
         </select><br><br>
 
         <label for="reason">Reason for Joining:</label><br>
@@ -86,48 +86,23 @@
             event.preventDefault();
             if (!confirm('Confirm Form Submission?')) return false;
 
-            const studentid = document.getElementById("studentid").value;
-            const fname = document.getElementById("fname").value;
-            const bday = document.getElementById("bday").value;
-            const email = document.getElementById("email").value;
-            const phone = document.getElementById("phone").value;
-            const grlevel = document.getElementById("grlevel").value;
-            const organization = document.getElementById("organization").value;
-            const reason = document.getElementById("reason").value;
-            const internExternEl = document.querySelector('input[name="intern_extern"]:checked');
-            const intern_extern = internExternEl ? internExternEl.value : "";
-
-            const entry = {
-                id: Date.now(),
-                studentid,
-                fname,
-                bday,
-                email,
-                phone,
-                grlevel,
-                intern_extern,
-                organization,
-                reason
-            };
+            // collect values succinctly
+            const ids = ['studentid','fname','bday','email','phone','grlevel','organization','reason'];
+            const entry = ids.reduce((o,id)=> (o[id]=document.getElementById(id).value, o), {});
+            const sel = document.querySelector('input[name="intern_extern"]:checked');
+            entry.intern_extern = sel ? sel.value : '';
+            entry.id = Date.now();
 
             const key = 'clubSignups';
-            const existing = JSON.parse(localStorage.getItem(key) || '[]');
-            existing.push(entry);
-            localStorage.setItem(key, JSON.stringify(existing));
+            const arr = JSON.parse(localStorage.getItem(key) || '[]');
+            arr.push(entry);
+            localStorage.setItem(key, JSON.stringify(arr));
 
-            // redirect to the view page present in your workspace
             window.location.href = 'viewSignUps.html';
             return false;
         }
         function resetPage() {
-            document.getElementById("studentid").value = "";
-            document.getElementById("fname").value = "";
-            document.getElementById("bday").value = "";
-            document.getElementById("email").value = "";
-            document.getElementById("phone").value = "";
-            document.getElementById("grlevel").value = "";
-            document.getElementById("organization").value = "";
-            document.getElementById("reason").value = "";
+            ['studentid','fname','bday','email','phone','grlevel','organization','reason'].forEach(id => document.getElementById(id).value = '');
         }
     </script>
 </body>

@@ -34,7 +34,12 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            border-color: #ffffff;
+            border: 2px solid #222;
+        }
+        th, td {
+            border: 1px solid #222;
+            padding: 8px;
+            text-align: left;
         }
         th {
             background-color: #ffdeec;
@@ -98,57 +103,32 @@
 
     <script>
         const KEY = 'clubSignups';
-        const clubNames = { art: 'Arts Club', sports: 'Sports Club', theatre: 'Theatre Club', science: 'Science Club', math: 'Math Club' };
+        const clubNames = { Arts:'Arts Club', Sports:'Sports Club', Theatre:'Theatre Club', Science:'Science Club', Math:'Math Club', art: 'Arts Club', sports: 'Sports Club', theatre: 'Theatre Club', science: 'Science Club', math: 'Math Club' };
 
-        function loadEntries() {
-            try {
-                return JSON.parse(localStorage.getItem(KEY) || '[]');
-            } catch (e) {
-                return [];
-            }
-        }
+        const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; } };
+        const esc = s => s == null ? '' : String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-        function escapeHtml(s) {
-            if (s === null || s === undefined) return '';
-            return String(s)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
-        }
-
-        function render(filter) {
-            const entries = loadEntries();
+        function render(filter = 'none') {
+            const entries = load();
             const tbody = document.querySelector('#signupTable tbody');
-            const filtered = entries.filter(e => !filter || filter === 'none' ? true : e.organization === filter);
-            tbody.innerHTML = '';
-
+            const filtered = entries.filter(e => (filter === 'none' || !filter) ? true : e.organization === filter);
             if (filtered.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">No signups found.</td></tr>';
             } else {
-                const rows = filtered.map(e => {
-                    return `<tr>
-                        <td>${escapeHtml(clubNames[e.organization] || e.organization)}</td>
-                        <td>${escapeHtml(e.studentid)}</td>
-                        <td>${escapeHtml(e.fname)}</td>
-                        <td>${escapeHtml(e.grlevel)}</td>
-                        <td>${escapeHtml(e.email)}</td>
-                        <td>${escapeHtml(e.phone)}</td>
-                        <td>${escapeHtml(e.intern_extern)}</td>
-                    </tr>`;
-                }).join('');
-                tbody.innerHTML = rows;
+                tbody.innerHTML = filtered.map(e => `<tr>
+                    <td>${esc(clubNames[e.organization] || e.organization)}</td>
+                    <td>${esc(e.studentid)}</td>
+                    <td>${esc(e.fname)}</td>
+                    <td>${esc(e.grlevel)}</td>
+                    <td>${esc(e.email)}</td>
+                    <td>${esc(e.phone)}</td>
+                    <td>${esc(e.intern_extern)}</td>
+                </tr>`).join('');
             }
-
             document.getElementById('totalCount').textContent = filtered.length;
         }
 
-        document.getElementById('filterClub').addEventListener('change', function() {
-            render(this.value);
-        });
-
-        // initial render
+        document.getElementById('filterClub').addEventListener('change', e => render(e.target.value));
         render('none');
     </script>
 </body>
