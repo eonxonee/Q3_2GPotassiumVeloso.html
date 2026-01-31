@@ -75,11 +75,11 @@
         <label for="filterClub">Select your Club:</label>
         <select id="filterClub">
             <option value="none">-- select --</option>
-            <option value="art">Arts Club</option>
-            <option value="sports">Sports Club</option>
-            <option value="theatre">Theatre Club</option>
-            <option value="science">Science Club</option>
-            <option value="math">Math Club</option>
+            <option value="Arts">Arts Club</option>
+            <option value="Sports">Sports Club</option>
+            <option value="Theatre">Theatre Club</option>
+            <option value="Science">Science Club</option>
+            <option value="Math">Math Club</option>
         </select>
     </div>
 
@@ -103,7 +103,7 @@
 
     <script>
         const KEY = 'clubSignups';
-        const clubNames = { Arts:'Arts Club', Sports:'Sports Club', Theatre:'Theatre Club', Science:'Science Club', Math:'Math Club', art: 'Arts Club', sports: 'Sports Club', theatre: 'Theatre Club', science: 'Science Club', math: 'Math Club' };
+        const clubNames = { Arts:'Arts Club', Sports:'Sports Club', Theatre:'Theatre Club', Science:'Science Club', Math:'Math Club' };
 
         const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; } };
         const esc = s => s == null ? '' : String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -111,22 +111,22 @@
         function render(filter = 'none') {
             const entries = load();
             const tbody = document.querySelector('#signupTable tbody');
-            const filtered = entries.filter(e => (filter === 'none' || !filter) ? true : e.organization === filter);
-            if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">No signups found.</td></tr>';
-            } else {
-                tbody.innerHTML = filtered.map(e => `<tr>
-                    <td>${esc(clubNames[e.organization] || e.organization)}</td>
-                    <td>${esc(e.studentid)}</td>
-                    <td>${esc(e.fname)}</td>
-                    <td>${esc(e.grlevel)}</td>
-                    <td>${esc(e.email)}</td>
-                    <td>${esc(e.phone)}</td>
-                    <td>${esc(e.intern_extern)}</td>
-                </tr>`).join('');
-            }
-            document.getElementById('totalCount').textContent = filtered.length;
-        }
+            const filtered = entries.filter(e => filter === 'none' ? true : e.organization === filter);
+             if (filtered.length === 0) {
+                 tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">No signups found.</td></tr>';
+             } else {
+                 tbody.innerHTML = filtered.map(e => `<tr>
+                     <td>${esc(clubNames[e.organization] || e.organization)}</td>
+                     <td>${esc(e.studentid)}</td>
+                     <td>${esc(e.fname)}</td>
+                     <td>${esc(e.grlevel)}</td>
+                     <td>${esc(e.email)}</td>
+                     <td>${esc(e.phone)}</td>
+                     <td>${esc(e.intern_extern)}</td>
+                 </tr>`).join('');
+             }
+             document.getElementById('totalCount').textContent = filtered.length;
+         }
 
         document.getElementById('filterClub').addEventListener('change', e => render(e.target.value));
         render('none');
