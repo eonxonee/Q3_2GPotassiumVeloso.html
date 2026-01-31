@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VIEW SIGNUPS</title>
+    <style>
+        h1 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #000000;
+        }
+        h5 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #000000;
+        }
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            background-color: #ffced8;
+            color: #000000;
+            margin: 20px;
+        }
+        .text_container {
+            background-color: #ffffff;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .table_container {
+            background-color: #ffffff;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-color: #ffffff;
+        }
+        th {
+            background-color: #ffdeec;
+            padding: 10px;
+            text-align: center;
+        }
+        input[type="text"], input[type="number"], input[type="email"], input[type="date"], select {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #000000;
+            border-radius: 4px;
+        }
+        input:focus, select:focus {
+            border-color: #ff4492;
+            box-shadow: 0 0 5px rgba(255, 0, 166, 0.5);
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(190, 130, 161, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class = "text_container">
+    <h1>Show List of Students Who Signed Up</h1>
+    <h5>by AM Veloso</h5>
+
+        <a href="Q33GPotassiumVeloso.html">Back to Signup</a><br><br>
+
+        <label for="filterClub">Select your Club:</label>
+        <select id="filterClub">
+            <option value="none">-- select --</option>
+            <option value="art">Arts Club</option>
+            <option value="sports">Sports Club</option>
+            <option value="theatre">Theatre Club</option>
+            <option value="science">Science Club</option>
+            <option value="math">Math Club</option>
+        </select>
+    </div>
+
+    <div class="table_container">
+        <p>Total Signup: <span id="totalCount">0</span></p>
+        <table id="signupTable">
+            <thead>
+                <tr>
+                    <th>Club</th>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Grade</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Intern/Extern</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        const KEY = 'clubSignups';
+        const clubNames = { art: 'Arts Club', sports: 'Sports Club', theatre: 'Theatre Club', science: 'Science Club', math: 'Math Club' };
+
+        function loadEntries() {
+            try {
+                return JSON.parse(localStorage.getItem(KEY) || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function escapeHtml(s) {
+            if (s === null || s === undefined) return '';
+            return String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function render(filter) {
+            const entries = loadEntries();
+            const tbody = document.querySelector('#signupTable tbody');
+            const filtered = entries.filter(e => !filter || filter === 'none' ? true : e.organization === filter);
+            tbody.innerHTML = '';
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">No signups found.</td></tr>';
+            } else {
+                const rows = filtered.map(e => {
+                    return `<tr>
+                        <td>${escapeHtml(clubNames[e.organization] || e.organization)}</td>
+                        <td>${escapeHtml(e.studentid)}</td>
+                        <td>${escapeHtml(e.fname)}</td>
+                        <td>${escapeHtml(e.grlevel)}</td>
+                        <td>${escapeHtml(e.email)}</td>
+                        <td>${escapeHtml(e.phone)}</td>
+                        <td>${escapeHtml(e.intern_extern)}</td>
+                    </tr>`;
+                }).join('');
+                tbody.innerHTML = rows;
+            }
+
+            document.getElementById('totalCount').textContent = filtered.length;
+        }
+
+        document.getElementById('filterClub').addEventListener('change', function() {
+            render(this.value);
+        });
+
+        // initial render
+        render('none');
+    </script>
+</body>
+</html>
