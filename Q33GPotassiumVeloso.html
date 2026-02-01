@@ -86,23 +86,26 @@
             event.preventDefault();
             if (!confirm('Confirm Form Submission?')) return false;
 
-            // collect values succinctly
-            const ids = ['studentid','fname','bday','email','phone','grlevel','organization','reason'];
-            const entry = ids.reduce((o,id)=> (o[id]=document.getElementById(id).value, o), {});
-            const sel = document.querySelector('input[name="intern_extern"]:checked');
-            entry.intern_extern = sel ? sel.value : '';
-            entry.id = Date.now();
-
-            const key = 'clubSignups';
-            const arr = JSON.parse(localStorage.getItem(key) || '[]');
+            const formData = new FormData(document.getElementById('signupForm'));
+            const entry = Object.fromEntries(formData);
+            entry.intern_extern = document.querySelector('input[name="intern_extern"]:checked').value;
+            
+            const arr = JSON.parse(localStorage.getItem('clubSignups') || '[]');
             arr.push(entry);
-            localStorage.setItem(key, JSON.stringify(arr));
+            localStorage.setItem('clubSignups', JSON.stringify(arr));
 
             window.location.href = 'viewSignUps.html';
             return false;
         }
         function resetPage() {
-            ['studentid','fname','bday','email','phone','grlevel','organization','reason'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('studentid').value = '';
+            document.getElementById('fname').value = '';
+            document.getElementById('bday').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('grlevel').value = 'G7';
+            document.getElementById('organization').value = 'Arts';
+            document.getElementById('reason').value = '';
         }
     </script>
 </body>

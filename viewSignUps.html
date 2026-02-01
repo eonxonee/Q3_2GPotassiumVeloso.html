@@ -103,33 +103,51 @@
 
     <script>
         const KEY = 'clubSignups';
-        const clubNames = { Arts:'Arts Club', Sports:'Sports Club', Theatre:'Theatre Club', Science:'Science Club', Math:'Math Club' };
+        const clubNames = {
+            Arts: 'Arts Club',
+            Sports: 'Sports Club',
+            Theatre: 'Theatre Club',
+            Science: 'Science Club',
+            Math: 'Math Club'
+        };
 
-        const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; } };
-        const esc = s => s == null ? '' : String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        function loadSignups() {
+            const data = localStorage.getItem(KEY);
+            return data ? JSON.parse(data) : [];
+        }
 
-        function render(filter = 'none') {
-            const entries = load();
+        function escapeHtml(s) {
+            const div = document.createElement('div');
+            div.textContent = s;
+            return div.innerHTML;
+        }
+
+        function renderTable(filter = 'none') {
+            const entries = loadSignups();
+            const filtered = filter === 'none' ? entries : entries.filter(e => e.organization === filter);
             const tbody = document.querySelector('#signupTable tbody');
-            const filtered = entries.filter(e => filter === 'none' ? true : e.organization === filter);
-             if (filtered.length === 0) {
-                 tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">No signups found.</td></tr>';
-             } else {
-                 tbody.innerHTML = filtered.map(e => `<tr>
-                     <td>${esc(clubNames[e.organization] || e.organization)}</td>
-                     <td>${esc(e.studentid)}</td>
-                     <td>${esc(e.fname)}</td>
-                     <td>${esc(e.grlevel)}</td>
-                     <td>${esc(e.email)}</td>
-                     <td>${esc(e.phone)}</td>
-                     <td>${esc(e.intern_extern)}</td>
-                 </tr>`).join('');
-             }
-             document.getElementById('totalCount').textContent = filtered.length;
-         }
+            
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">No signups found.</td></tr>';
+            } else {
+                tbody.innerHTML = filtered.map(e => `<tr>
+                    <td>${escapeHtml(clubNames[e.organization] || e.organization)}</td>
+                    <td>${escapeHtml(e.studentid)}</td>
+                    <td>${escapeHtml(e.fname)}</td>
+                    <td>${escapeHtml(e.grlevel)}</td>
+                    <td>${escapeHtml(e.email)}</td>
+                    <td>${escapeHtml(e.phone)}</td>
+                    <td>${escapeHtml(e.intern_extern)}</td>
+                </tr>`).join('');
+            }
+            
+            document.getElementById('totalCount').textContent = filtered.length;
+        }
+        document.getElementById('filterClub').addEventListener('change', (e) => {
+            renderTable(e.target.value);
+        });
 
-        document.getElementById('filterClub').addEventListener('change', e => render(e.target.value));
-        render('none');
+        renderTable();
     </script>
 </body>
 </html>
